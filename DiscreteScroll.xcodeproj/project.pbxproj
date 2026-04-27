@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D4E5F60002 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001 /* Assets.xcassets */; };
 		C3F94D482C0406330051923E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C3F94D472C0406330051923E /* main.c */; };
 		C3F94D562C0408930051923E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C3F94D542C0408930051923E /* LICENSE */; };
 		C3F94D572C0408930051923E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C3F94D552C0408930051923E /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D4E5F60001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3F94D3B2C0406320051923E /* DiscreteScroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscreteScroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F94D462C0406330051923E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3F94D472C0406330051923E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 		C3F94D3D2C0406320051923E /* DiscreteScroll */ = {
 			isa = PBXGroup;
 			children = (
+				A1B2C3D4E5F60001 /* Assets.xcassets */,
 				C3F94D462C0406330051923E /* Info.plist */,
 				C3F94D472C0406330051923E /* main.c */,
 			);
@@ -114,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F60002 /* Assets.xcassets in Resources */,
 				C3F94D572C0408930051923E /* README.md in Resources */,
 				C3F94D562C0408930051923E /* LICENSE in Resources */,
 			);
@@ -265,6 +269,7 @@
 		C3F94D4E2C0406330051923E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
