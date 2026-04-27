@@ -39,6 +39,13 @@ or do the following:
 2. Search for `DiscreteScroll` and select it.
 3. Click the stop button in the upper-left corner and choose Quit.
 
+#### Building from Source
+
+```bash
+xcodebuild -project DiscreteScroll.xcodeproj -configuration Release
+mv build/Release/DiscreteScroll.app /Applications
+```
+
 ### Configuration
 
 The default behavior is to scroll 3 lines with each notch of the wheel.
