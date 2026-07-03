@@ -95,6 +95,11 @@ even though you have previously granted it access, try the following:
 
 ### History
 
+#### v2.0.0? (2026-07-03)
+
+- Rebuilt for native Apple Silicon support, since the old Intel-only binary relied on Rosetta 2 (which is being phased out in future macOS releases). 
+- Ported from C to Swift. (Just my hobby)
+
 #### v1.2.1 (2024-06-05)
 
 - **Fix:** Release event tap and run loop source after adding source.
