@@ -1,7 +1,6 @@
 import AppKit
 import ApplicationServices
 
-
 struct TapContext {
     let lineValue: Int64
     let port: CFMachPort
