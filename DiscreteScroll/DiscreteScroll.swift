@@ -27,14 +27,12 @@ struct DiscreteScroll {
     
     private let lines: Int64?
     
-    static func main() {
+    static func main() async {
         let lines = UserDefaults.standard.object(forKey: keyLineCount) as? Int64
         let app = DiscreteScroll(lines: lines)
-        Task {
-            await app.waitUntilTrusted()
-            app.setupObserveScroll()
-        }
-        RunLoop.current.run()
+        await app.waitUntilTrusted()
+        app.setupObserveScroll()
+        await parkForever()
     }
     
     /// アクセシビリティ許可をチェックし、許可済みとなったらループを止める
@@ -43,7 +41,7 @@ struct DiscreteScroll {
         let options = ["AXTrustedCheckOptionPrompt": true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
         while !AXIsProcessTrusted() {
-            try? await Task.sleep(for: .seconds(0.2))
+            try? await Task.sleep(for: .seconds(1))
         }
     }
     
@@ -79,5 +77,10 @@ struct DiscreteScroll {
                                         nil,
                                         nil)
         exit(EXIT_FAILURE)
+    }
+    
+    /// プロセスを終了させず、イベントタップの発火を待ち続ける
+    private static func parkForever() async {
+        await withUnsafeContinuation { (_: UnsafeContinuation<Void, Never>) in }
     }
 }
