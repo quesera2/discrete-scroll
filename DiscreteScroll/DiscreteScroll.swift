@@ -70,10 +70,14 @@ struct DiscreteScroll {
     
     /// エラーダイアログを表示して終了
     func displayNoticeAndExit(_ alertHeader: String) -> Never {
-        let alert = NSAlert()
-        alert.messageText = alertHeader
-        alert.alertStyle = .critical
-        alert.runModal()
+        CFUserNotificationDisplayNotice(0,
+                                        kCFUserNotificationCautionAlertLevel,
+                                        nil,
+                                        nil,
+                                        nil,
+                                        alertHeader as CFString,
+                                        nil,
+                                        nil)
         exit(EXIT_FAILURE)
     }
 }
