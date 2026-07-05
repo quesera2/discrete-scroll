@@ -11,6 +11,8 @@ struct TapContext {
 @MainActor
 struct DiscreteScroll {
     
+    static let accessibilityNotificationName: Notification.Name = Notification.Name("com.apple.accessibility.api")
+    
     static let defaultLineCount: Int64 = 3
     
     static let keyLineCount = "lines"
@@ -45,13 +47,18 @@ struct DiscreteScroll {
         await parkForever()
     }
     
-    /// アクセシビリティ許可をチェックし、許可済みとなったらループを止める
+    /// アクセシビリティ許可をチェックし、許可済みとなるまで待機する
     func waitUntilTrusted() async {
+        if AXIsProcessTrusted() { return }
+        
         // kAXTrustedCheckOptionPrompt の定数を直接参照する
         let options = ["AXTrustedCheckOptionPrompt": true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
-        while !AXIsProcessTrusted() {
-            try? await Task.sleep(for: .seconds(1))
+        
+        let center = DistributedNotificationCenter.default()
+        let stream = center.notifications(named: DiscreteScroll.accessibilityNotificationName)
+        for await _ in stream {
+            if AXIsProcessTrusted() { break }
         }
     }
     
