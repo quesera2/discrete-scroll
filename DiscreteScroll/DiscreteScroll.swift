@@ -1,6 +1,12 @@
 import AppKit
 import ApplicationServices
 
+
+struct TapContext {
+    let lineValue: Int64
+    let port: CFMachPort
+}
+
 @main
 @MainActor
 struct DiscreteScroll {
@@ -9,18 +15,22 @@ struct DiscreteScroll {
     
     static let keyLineCount = "lines"
     
-    static let tapCallback: CGEventTapCallBack = { _, _, event, userInfo in
+    static let tapCallback: CGEventTapCallBack = { _, type, event, userInfo in
         guard
-            let userInfo
+            let userInfo = userInfo?.load(as: TapContext.self)
         else {
             return Unmanaged.passUnretained(event)
         }
         
+        if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
+            CGEvent.tapEnable(tap: userInfo.port, enable: true)
+            return nil
+        }
+        
         if event.getIntegerValueField(.scrollWheelEventIsContinuous) == 0 {
             let delta = event.getIntegerValueField(.scrollWheelEventPointDeltaAxis1)
-            let lines = userInfo.load(as: Int64.self)
             event.setIntegerValueField(.scrollWheelEventDeltaAxis1,
-                                       value: delta.signum() * lines)
+                                       value: delta.signum() * userInfo.lineValue)
         }
         return Unmanaged.passUnretained(event)
     }
@@ -49,8 +59,7 @@ struct DiscreteScroll {
     func setupObserveScroll() {
         // スクロール行数をポインタに詰める、これはアプリが常駐している間、意図的に解放しない
         let linesValue = self.lines ?? DiscreteScroll.defaultLineCount
-        let pointer = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
-        pointer.initialize(to: linesValue)
+        let pointer = UnsafeMutablePointer<TapContext>.allocate(capacity: 1)
         guard
             let port = CGEvent.tapCreate(tap: .cgSessionEventTap,
                                          place: .headInsertEventTap,
@@ -62,7 +71,7 @@ struct DiscreteScroll {
             pointer.deallocate()
             displayNoticeAndExit("DiscreteScroll could not create an event tap.")
         }
-        
+        pointer.pointee = TapContext(lineValue: linesValue, port: port)
         RunLoop.current.add(port, forMode: .default)
     }
     
