@@ -57,7 +57,7 @@ struct DiscreteScroll {
     
     /// スクロール状態の監視のコールバックを設定する
     func setupObserveScroll() {
-        // スクロール行数をポインタに詰める、これはアプリが常駐している間、意図的に解放しない
+        // スクロール行数と作成したCFMachPortをポインタに詰める、これはアプリが常駐している間、意図的に解放しない
         let linesValue = self.lines ?? DiscreteScroll.defaultLineCount
         let pointer = UnsafeMutablePointer<TapContext>.allocate(capacity: 1)
         guard
