@@ -1,8 +1,7 @@
 # DiscreteScroll
 
-<img src="https://github.com/emreyolcu/discrete-scroll/blob/icon/icon.png?raw=true" align="right" width="35%">
-
-[![Downloads](https://img.shields.io/github/downloads/emreyolcu/discrete-scroll/total.svg)](https://github.com/emreyolcu/discrete-scroll/releases)
+> [!NOTE]
+> This is a Swift port of [discrete-scroll](https://github.com/emreyolcu/discrete-scroll) by emreyolcu.
 
 This small utility fixes macOS's unnecessary scroll wheel acceleration.
 It runs in the background, allowing you to scroll
